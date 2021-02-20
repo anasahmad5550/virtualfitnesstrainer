@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'dart:math';
+
 
 class HomeContainer extends StatelessWidget {
   final String imgurl;
@@ -19,9 +19,9 @@ class HomeContainer extends StatelessWidget {
             color: Colors.white,
           ),
           margin: const EdgeInsets.all(12.0),
-          height: (MediaQuery.of(context).size.height -
-                  MediaQuery.of(context).padding.top) *
-              0.24,
+          // height: (MediaQuery.of(context).size.height -
+          //         MediaQuery.of(context).padding.top) *
+          //     0.24,
           //width: MediaQuery.of(context).size.width * 0.45,
           //color: Colors.white,
           child: Column(

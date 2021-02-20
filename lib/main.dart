@@ -30,7 +30,9 @@ class MyApp extends StatelessWidget {
       home: HomeScreen(),
       routes: {
         //   '/': (ctx) => TabsScreen(),
+        // '/BmiCalculaorScreen' :(ctx)=>BmiCalculaorScreen(),
         BmiCalculaorScreen.routeid: (ctx) => BmiCalculaorScreen(),
+
         //   MealDetailScreen.routeid: (ctx) => MealDetailScreen()
       },
     );

@@ -17,7 +17,9 @@ class RoundIconButton extends StatelessWidget {
       fillColor: Theme.of(context).accentColor,
       elevation: 6.0,
       constraints: BoxConstraints.tightFor(
-        height: 56.0,
+        height: (MediaQuery.of(context).size.height -
+                MediaQuery.of(context).padding.top) *
+            0.07,
         width: 56.0,
       ),
     );

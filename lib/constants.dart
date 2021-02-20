@@ -11,7 +11,7 @@ const kbottomcontainerheight = 80.0;
 
 const kstyle = TextStyle(
   fontWeight: FontWeight.w900,
-  fontSize: 50,
+  //fontSize: 50,
 );
 
 const kresult = TextStyle(

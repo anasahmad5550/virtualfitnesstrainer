@@ -5,7 +5,10 @@ import 'bmiCalculatorScreen.dart';
 
 class Dashboard extends StatelessWidget {
   void pushbmi(BuildContext context) {
-    Navigator.of(context).pushNamed(BmiCalculaorScreen.routeid);
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      return BmiCalculaorScreen();
+    }));
+    // Navigator.of(context).pushNamed(BmiCalculaorScreen.routeid);
   }
 
   @override
@@ -96,38 +99,47 @@ class Dashboard extends StatelessWidget {
                   SizedBox(
                     height: (MediaQuery.of(context).size.height -
                             MediaQuery.of(context).padding.top) *
-                        0.03,
+                        0.015,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      HomeContainer(
-                        title: 'Exercises',
-                        icnimgurl: 'images/icn1.png',
-                        imgurl: 'images/image1.png',
-                      ),
-                      HomeContainer(
-                        title: 'Reminder',
-                        icnimgurl: 'images/icn4.png',
-                        imgurl: 'images/image2.png',
-                      ),
-                    ],
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        HomeContainer(
+                          title: 'Exercises',
+                          icnimgurl: 'images/icn1.png',
+                          imgurl: 'images/image1.png',
+                        ),
+                        HomeContainer(
+                          title: 'Reminder',
+                          icnimgurl: 'images/icn4.png',
+                          imgurl: 'images/image2.png',
+                        ),
+                      ],
+                    ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      HomeContainer(
-                        title: 'Diet Plan',
-                        icnimgurl: 'images/icn2.png',
-                        imgurl: 'images/image3.png',
-                      ),
-                      HomeContainer(
-                        onpress: () => pushbmi(context),
-                        title: 'Bmi',
-                        icnimgurl: 'images/icn3.png',
-                        imgurl: 'images/image4.png',
-                      ),
-                    ],
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        HomeContainer(
+                          title: 'Diet Plan',
+                          icnimgurl: 'images/icn2.png',
+                          imgurl: 'images/image3.png',
+                        ),
+                        HomeContainer(
+                          onpress: () => pushbmi(context),
+                          title: 'Bmi',
+                          icnimgurl: 'images/icn3.png',
+                          imgurl: 'images/image4.png',
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: (MediaQuery.of(context).size.height -
+                            MediaQuery.of(context).padding.top) *
+                        0.015,
                   ),
                 ],
               ),
