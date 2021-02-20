@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-
-
 class CalorieResultScreen extends StatelessWidget {
   final maintianCalories;
   CalorieResultScreen({@required this.maintianCalories});

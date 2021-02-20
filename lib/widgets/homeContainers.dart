@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-
 class HomeContainer extends StatelessWidget {
   final String imgurl;
   final String icnimgurl;

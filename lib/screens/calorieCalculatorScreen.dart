@@ -5,7 +5,6 @@ import 'package:virtualfitnesstrainer/constants.dart';
 import 'package:virtualfitnesstrainer/widgets/round_button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-
 import 'calorieResultScreen.dart';
 
 class CalorieCalculatorScreen extends StatefulWidget {

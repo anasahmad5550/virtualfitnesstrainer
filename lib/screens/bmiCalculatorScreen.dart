@@ -19,8 +19,6 @@ int age = 20;
 bool gender = false;
 
 class _BmiCalculaorScreenState extends State<BmiCalculaorScreen> {
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
