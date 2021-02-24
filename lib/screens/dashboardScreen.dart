@@ -2,11 +2,19 @@ import 'package:flutter/material.dart';
 
 import 'package:virtualfitnesstrainer/widgets/homeContainers.dart';
 import 'bmiCalculatorScreen.dart';
+import 'reminderScreen.dart';
 
 class Dashboard extends StatelessWidget {
   void pushbmi(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) {
       return BmiCalculaorScreen();
+    }));
+    // Navigator.of(context).pushNamed(BmiCalculaorScreen.routeid);
+  }
+
+  void pushreminder(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      return Reminder_list_Screen();
     }));
     // Navigator.of(context).pushNamed(BmiCalculaorScreen.routeid);
   }
@@ -111,6 +119,7 @@ class Dashboard extends StatelessWidget {
                           imgurl: 'images/image1.png',
                         ),
                         HomeContainer(
+                          onpress: () => pushreminder(context),
                           title: 'Reminder',
                           icnimgurl: 'images/icn4.png',
                           imgurl: 'images/image2.png',

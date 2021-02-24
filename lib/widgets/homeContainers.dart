@@ -12,6 +12,8 @@ class HomeContainer extends StatelessWidget {
     return Expanded(
       child: InkWell(
         onTap: onpress,
+        focusColor: Colors.blue,
+        splashColor: Colors.pink,
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
