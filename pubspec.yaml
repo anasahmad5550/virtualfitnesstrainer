@@ -31,6 +31,7 @@ dependencies:
   font_awesome_flutter: ^8.11.0
   persistent_bottom_nav_bar: ^3.1.0
   intl: ^0.16.1
+  youtube_player_flutter: ^7.0.0+7
 
 dev_dependencies:
   flutter_test:
@@ -51,6 +52,7 @@ flutter:
   assets:
     - images/
     - icons/
+    - images/exerciseImages/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

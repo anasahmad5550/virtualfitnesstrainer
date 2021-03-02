@@ -2,9 +2,17 @@ import 'package:flutter/material.dart';
 
 import 'package:virtualfitnesstrainer/widgets/homeContainers.dart';
 import 'bmiCalculatorScreen.dart';
+import 'MuscleGroup.dart';
 import 'reminderScreen.dart';
 
 class Dashboard extends StatelessWidget {
+  void pushMuscleGroup(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      return ExerciseMuscleGroupScreen();
+    }));
+    // Navigator.of(context).pushNamed(BmiCalculaorScreen.routeid);
+  }
+
   void pushbmi(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) {
       return BmiCalculaorScreen();
@@ -114,6 +122,7 @@ class Dashboard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         HomeContainer(
+                          onpress: () => pushMuscleGroup(context),
                           title: 'Exercises',
                           icnimgurl: 'images/icn1.png',
                           imgurl: 'images/image1.png',
