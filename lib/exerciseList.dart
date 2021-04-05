@@ -1,6 +1,6 @@
 import 'package:virtualfitnesstrainer/models/exercise.dart';
 
-const List chestList = const [
+const List<Exercise> chestList = const [
   Exercise(
     title: 'Bench Press',
     imgurl: 'benchPress.jpg',
@@ -28,40 +28,40 @@ const List chestList = const [
       videoUrlID: 'JJitfZKlKk4'),
 ];
 
-const List absList = const [
+const List<Exercise> absList = const [
   Exercise(
     title: '',
     imgurl: '',
   ),
 ];
-const List shoulderList = const [
+const List<Exercise> shoulderList = const [
   Exercise(
     title: '',
     imgurl: '',
   ),
 ];
-const List bicepsList = const [
-  Exercise(
-    title: '',
-    imgurl: '',
-  ),
-];
-
-const List tricepsList = const [
+const List<Exercise> bicepsList = const [
   Exercise(
     title: '',
     imgurl: '',
   ),
 ];
 
-const List backList = const [
+const List<Exercise> tricepsList = const [
   Exercise(
     title: '',
     imgurl: '',
   ),
 ];
 
-const legsList = const [
+const List<Exercise> backList = const [
+  Exercise(
+    title: '',
+    imgurl: '',
+  ),
+];
+
+const List<Exercise> legsList = const [
   Exercise(
     title: '',
     imgurl: '',

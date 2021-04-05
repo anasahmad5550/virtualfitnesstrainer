@@ -33,6 +33,7 @@ dependencies:
   intl: ^0.16.1
   youtube_player_flutter: ^7.0.0+7
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

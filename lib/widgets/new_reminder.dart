@@ -77,8 +77,8 @@ class _NewReminderState extends State<NewReminder> {
                     Expanded(
                       child: Text(
                         _selecteddate == null
-                            ? 'No time choosen '
-                            : 'selectd time: ${DateFormat('kk:mm a ').format(_selecteddate)}',
+                            ? 'No date choosen '
+                            : 'selected time: ${DateFormat('kk:mm a ').format(_selecteddate)}',
                       ),
                     ),
                     Adaptiveflatbutton(
@@ -93,7 +93,7 @@ class _NewReminderState extends State<NewReminder> {
                   color: Theme.of(context).accentColor,
                   onPressed: submitData,
                   child: Text(
-                    'Add Transaction',
+                    'Add Reminder',
                   ))
             ],
           ),

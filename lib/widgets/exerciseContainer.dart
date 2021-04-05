@@ -32,7 +32,7 @@ class ExerciseContainer extends StatelessWidget {
       splashColor: Theme.of(context).primaryColor,
 
       child: Container(
-        // height: 200,
+        height: 200,
         // width: 100,
         child: Column(
           children: [

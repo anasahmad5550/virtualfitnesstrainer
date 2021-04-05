@@ -81,7 +81,7 @@ class _Reminder_list_ScreenState extends State<Reminder_list_Screen> {
                         color: Colors.white,
                       ),
                       width: double.infinity,
-                      height: 80,
+                      height: MediaQuery.of(context).size.height * 0.11,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -105,7 +105,19 @@ class _Reminder_list_ScreenState extends State<Reminder_list_Screen> {
                                   ],
                                 ),
                               ),
-                              Icon(Icons.more_vert)
+                              PopupMenuButton(
+                                  onSelected: (_) {},
+                                  icon: Icon(Icons.more_vert),
+                                  itemBuilder: (_) => [
+                                        PopupMenuItem(
+                                          child: Text('Edit'),
+                                          //value: filteroptions.favourite,
+                                        ),
+                                        PopupMenuItem(
+                                          child: Text('Delete'),
+                                          //value: filteroptions.all,
+                                        )
+                                      ]),
                             ],
                           ),
                           Text(
