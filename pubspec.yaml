@@ -32,6 +32,11 @@ dependencies:
   persistent_bottom_nav_bar: ^3.1.0
   intl: ^0.16.1
   youtube_player_flutter: ^7.0.0+7
+  flutter_local_notifications: ^5.0.0+1
+  shared_preferences: ^2.0.5
+  rxdart: ^0.26.0
+  timezone: ^0.7.0
+  flutter_native_timezone: ^1.0.0
 
 
 dev_dependencies:
@@ -52,7 +57,6 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - images/
-    - icons/
     - images/exerciseImages/
 
 

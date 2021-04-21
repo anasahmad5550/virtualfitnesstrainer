@@ -135,9 +135,11 @@ class _ExerciseVideoScreenState extends State<ExerciseVideoScreen> {
             textColor: Colors.white,
             color: Color(0xffFB376C),
           ),
-          middle: Text(
-            widget.exerciseName,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
+          middle: FittedBox(
+            child: Text(
+              widget.exerciseName,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
+            ),
           ),
           leading: Icon(
             Icons.arrow_back_ios,
