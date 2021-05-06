@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'screens/homeScreen.dart';
 import 'screens/bmiCalculatorScreen.dart';
+import 'package:provider/provider.dart';
+import 'models/reminder.dart';
 
 void main() => runApp(MyApp());
 

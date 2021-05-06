@@ -110,18 +110,43 @@ class notificationPlugin {
   //           UILocalNotificationDateInterpretation.absoluteTime);
   // }
 
-  Future<void> showWeeklyAtDayTime() async {
-    final timeZone = TimeZone();
-    DateTime datetime = DateTime.now().add(Duration(seconds: 3));
+  tz.TZDateTime _nextInstanceOfTenAM(DateTime datetime, location) {
+    //final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
 
+    tz.TZDateTime scheduledDate = tz.TZDateTime(location, datetime.year,
+        datetime.month, datetime.day, datetime.hour, datetime.minute);
+    if (scheduledDate.isBefore(datetime)) {
+      scheduledDate = scheduledDate.add(const Duration(days: 1));
+    }
+
+    return scheduledDate;
+  }
+
+  tz.TZDateTime _nextInstanceOfSundayAndSaturdayAtSpecificDate(
+      DateTime dateTime, location) {
+    tz.TZDateTime scheduledDate = _nextInstanceOfTenAM(dateTime, location);
+    while (scheduledDate.weekday == DateTime.saturday ||
+        scheduledDate.weekday == DateTime.sunday) {
+      scheduledDate = scheduledDate.add(const Duration(days: 1));
+    }
+
+    return scheduledDate;
+  }
+
+  Future<void> showWeeklyAtDayTime(
+      DateTime datetime, String title, int id) async {
+    final timeZone = TimeZone();
+    print(datetime.minute);
     // The device's timezone.
     String timeZoneName = await timeZone.getTimeZoneName();
 
     // Find the 'current location'
     final location = await timeZone.getLocation(timeZoneName);
 
-    final scheduledDate = tz.TZDateTime.from(datetime, location);
-    //var time = Time(21, 5, 0);
+    // tz.TZDateTime scheduledDate = tz.TZDateTime(location, datetime.year,
+    //     datetime.month, datetime.day, datetime.hour, datetime.minute);
+    //final scheduledDate = tz.TZDateTime.from(datetime, location);
+
     var androidChannelSpecifics = AndroidNotificationDetails(
       'CHANNEL_ID 4',
       'CHANNEL_NAME 4',
@@ -130,25 +155,26 @@ class notificationPlugin {
       priority: Priority.high,
       enableVibration: true,
     );
-    print('click 2');
+
     var iosChannelSpecifics = IOSNotificationDetails();
     var platformChannelSpecifics = NotificationDetails(
       android: androidChannelSpecifics,
       iOS: iosChannelSpecifics,
     );
     await flutterLocalNotificationsPlugin.zonedSchedule(
-      0,
-      'Test Title at ${datetime.hour}:${datetime.minute}.${datetime.second}',
-      'Test Body', //null
-      scheduledDate,
-
-      //tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)),
-      platformChannelSpecifics,
-      androidAllowWhileIdle: true,
-      payload: 'Test Payload',
-      uiLocalNotificationDateInterpretation:
-          UILocalNotificationDateInterpretation.absoluteTime,
-    );
+        id,
+        'Test Title at ${datetime.hour}:${datetime.minute}.${datetime.second}',
+        'its $title time ', //null
+        _nextInstanceOfSundayAndSaturdayAtSpecificDate(datetime, location),
+        //scheduledDate,
+        //tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)),
+        platformChannelSpecifics,
+        androidAllowWhileIdle: true,
+        payload: 'Test Payload',
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
+        matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime);
+    print('click 2');
   }
 }
 

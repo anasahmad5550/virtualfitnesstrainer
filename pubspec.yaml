@@ -37,6 +37,8 @@ dependencies:
   rxdart: ^0.26.0
   timezone: ^0.7.0
   flutter_native_timezone: ^1.0.0
+  provider: ^5.0.0
+
 
 
 dev_dependencies:

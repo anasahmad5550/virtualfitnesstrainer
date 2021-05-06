@@ -37,9 +37,18 @@ class _Reminder_list_ScreenState extends State<Reminder_list_Screen> {
     });
   }
 
+  void allReminderNotification() async {
+    for (int i = 0; i < reminderlist.length; i++) {
+      await NotifPlug.showWeeklyAtDayTime(
+          reminderlist[i].time, reminderlist[i].title, i);
+    }
+  }
+
   @override
   void initState() {
+    print(reminderlist.length);
     loadSharedPreferencesAndData();
+    //print(reminderlist.length);
     super.initState();
     NotifPlug.setListenerForLowerVersions(onNotificationInLowerVersions);
     //.setListenerForLowerVersions(onNotificationInLowerVersions);
@@ -57,12 +66,15 @@ class _Reminder_list_ScreenState extends State<Reminder_list_Screen> {
   void loadSharedPreferencesAndData() async {
     sharedPreferences = await SharedPreferences.getInstance();
     loadData();
+    //print(reminderlist.length);
+    //await allReminderNotification();
   }
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+    allReminderNotification();
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () => _startAddNewReminder(context),
@@ -70,104 +82,109 @@ class _Reminder_list_ScreenState extends State<Reminder_list_Screen> {
           Icons.add,
         ),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+                child: Text(
+              'Reminder',
+              style: TextStyle(
+                  fontSize: width * 0.08, fontWeight: FontWeight.bold),
+            )),
+            Container(
               child: Text(
-            'Reminder',
-            style:
-                TextStyle(fontSize: width * 0.08, fontWeight: FontWeight.bold),
-          )),
-          Container(
-            child: Text(
-              'Today Upcomings',
-              style: TextStyle(fontSize: width * 0.07),
+                'Today Upcomings',
+                style: TextStyle(fontSize: width * 0.07),
+              ),
+              //padding: EdgeInsets.all(12),
+              margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
             ),
-            //padding: EdgeInsets.all(12),
-            margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-          ),
-          SingleChildScrollView(
-            child: Container(
-              height: height * 0.7,
-              child: ListView.builder(
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () async {
-                        await NotifPlug.showNotification();
-                        print('click');
+            SingleChildScrollView(
+              child: Container(
+                height: height * 0.7,
+                child: ListView.builder(
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () async {
+                          //await NotifPlug.showNotification();
+                          print('click');
 
-                        //await NotifPlug.showWeeklyAtDayTime();
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(12),
-                        margin:
-                            EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black),
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.white,
-                        ),
-                        width: double.infinity,
-                        //height: MediaQuery.of(context).size.height * 0.11,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        DateFormat('kk:mm a ')
-                                            .format(reminderlist[index].time),
-                                        style: TextStyle(
-                                            fontSize: width * 0.07,
-                                            fontWeight: FontWeight.w600),
-                                      ),
-                                      Icon(
-                                        Icons.notifications_active,
-                                        color: Colors.grey,
-                                      ),
-                                    ],
+                          // await NotifPlug.showWeeklyAtDayTime(
+                          //     reminderlist[index].time,
+                          //     reminderlist[index].title);
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(12),
+                          margin: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 15),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black),
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.white,
+                          ),
+                          width: double.infinity,
+                          //height: MediaQuery.of(context).size.height * 0.11,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          DateFormat('kk:mm a ')
+                                              .format(reminderlist[index].time),
+                                          style: TextStyle(
+                                              fontSize: width * 0.07,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                        Icon(
+                                          Icons.notifications_active,
+                                          color: Colors.grey,
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                PopupMenuButton(
-                                    onSelected: (value) {
-                                      if (value == 1)
-                                        //edit
-                                        ;
-                                      else
-                                        removeItem(reminderlist[index]);
-                                      setState(() {});
-                                    },
-                                    icon: Icon(Icons.more_vert),
-                                    itemBuilder: (_) => [
-                                          PopupMenuItem(
-                                            child: Text('Edit'),
-                                            value: 1,
-                                          ),
-                                          PopupMenuItem(
-                                            child: Text('Delete'),
-                                            value: 0,
-                                          )
-                                        ]),
-                              ],
-                            ),
-                            Text(
-                              '${reminderlist[index].title}',
-                              style: TextStyle(fontSize: width * 0.05),
-                            )
-                          ],
+                                  PopupMenuButton(
+                                      onSelected: (value) {
+                                        if (value == 1)
+                                          //edit
+                                          ;
+                                        else
+                                          removeItem(reminderlist[index]);
+                                        setState(() {});
+                                      },
+                                      icon: Icon(Icons.more_vert),
+                                      itemBuilder: (_) => [
+                                            PopupMenuItem(
+                                              child: Text('Edit'),
+                                              value: 1,
+                                            ),
+                                            PopupMenuItem(
+                                              child: Text('Delete'),
+                                              value: 0,
+                                            )
+                                          ]),
+                                ],
+                              ),
+                              Text(
+                                '${reminderlist[index].title}',
+                                style: TextStyle(fontSize: width * 0.05),
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                  itemCount: reminderlist.length),
-            ),
-          )
-        ],
+                      );
+                    },
+                    itemCount: reminderlist.length),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
