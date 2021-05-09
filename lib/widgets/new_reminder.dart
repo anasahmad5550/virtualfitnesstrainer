@@ -77,7 +77,7 @@ class _NewReminderState extends State<NewReminder> {
                     Expanded(
                       child: Text(
                         _selecteddate == null
-                            ? 'No date choosen '
+                            ? 'No time choosen '
                             : 'selected time: ${DateFormat('kk:mm a ').format(_selecteddate)}',
                       ),
                     ),

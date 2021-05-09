@@ -1,21 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:virtualfitnesstrainer/models/reminder.dart';
 import 'package:intl/intl.dart';
+
 import 'package:virtualfitnesstrainer/widgets/new_reminder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
-import 'package:virtualfitnesstrainer/models/notificationPlugin.dart';
-import 'package:timezone/timezone.dart' as tz;
 
-List<Reminder> reminderlist = [];
+import 'package:virtualfitnesstrainer/models/notificationPlugin.dart';
+import 'package:provider/provider.dart';
+import 'package:virtualfitnesstrainer/Provider/ReminderList.dart';
+import 'package:virtualfitnesstrainer/widgets/alertDialog.dart' as custom;
 
 class Reminder_list_Screen extends StatefulWidget {
+  final Function f;
+
+  const Reminder_list_Screen({Key key, this.f}) : super(key: key);
   @override
   _Reminder_list_ScreenState createState() => _Reminder_list_ScreenState();
 }
 
 class _Reminder_list_ScreenState extends State<Reminder_list_Screen> {
   SharedPreferences sharedPreferences;
+
+  void allReminderNotification() async {
+    final rlist = Provider.of<ReminderList>(context).reminderList;
+    for (int i = 0; i < rlist.length; i++) {
+      await NotifPlug.showWeeklyAtDayTime(rlist[i].time, rlist[i].title, i);
+    }
+  }
+
+  void _addNewReminder(String ntitle, DateTime choosentime) {
+    final newReminder = Reminder(
+        id: DateTime.now().toString(), title: ntitle, time: choosentime);
+    // addItem(newReminder);
+    Provider.of<ReminderList>(context, listen: false).addItem(newReminder);
+    //saveData();
+    widget.f();
+  }
+
   void _startAddNewReminder(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -28,30 +49,11 @@ class _Reminder_list_ScreenState extends State<Reminder_list_Screen> {
     );
   }
 
-  void _addNewReminder(String ntitle, DateTime choosentime) {
-    final newReminder = Reminder(
-        id: DateTime.now().toString(), title: ntitle, time: choosentime);
-    addItem(newReminder);
-    setState(() {
-      //reminderlist.add(newReminder);
-    });
-  }
-
-  void allReminderNotification() async {
-    for (int i = 0; i < reminderlist.length; i++) {
-      await NotifPlug.showWeeklyAtDayTime(
-          reminderlist[i].time, reminderlist[i].title, i);
-    }
-  }
-
   @override
   void initState() {
-    print(reminderlist.length);
-    loadSharedPreferencesAndData();
-    //print(reminderlist.length);
     super.initState();
     NotifPlug.setListenerForLowerVersions(onNotificationInLowerVersions);
-    //.setListenerForLowerVersions(onNotificationInLowerVersions);
+
     NotifPlug.setOnNotificationClick(onNotificationClick("payload"));
   }
 
@@ -63,18 +65,13 @@ class _Reminder_list_ScreenState extends State<Reminder_list_Screen> {
     print('Payload $payload');
   }
 
-  void loadSharedPreferencesAndData() async {
-    sharedPreferences = await SharedPreferences.getInstance();
-    loadData();
-    //print(reminderlist.length);
-    //await allReminderNotification();
-  }
-
   @override
   Widget build(BuildContext context) {
+    final reminderlist = Provider.of<ReminderList>(context).reminderList;
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     allReminderNotification();
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () => _startAddNewReminder(context),
@@ -136,7 +133,7 @@ class _Reminder_list_ScreenState extends State<Reminder_list_Screen> {
                                     child: Row(
                                       children: [
                                         Text(
-                                          DateFormat('kk:mm a ')
+                                          DateFormat('hh:mm a ')
                                               .format(reminderlist[index].time),
                                           style: TextStyle(
                                               fontSize: width * 0.07,
@@ -151,11 +148,21 @@ class _Reminder_list_ScreenState extends State<Reminder_list_Screen> {
                                   ),
                                   PopupMenuButton(
                                       onSelected: (value) {
-                                        if (value == 1)
-                                          //edit
-                                          ;
-                                        else
-                                          removeItem(reminderlist[index]);
+                                        if (value == 1) {
+                                          showDialog(
+                                              context: context,
+                                              builder: (ctx) => custom.Dialog(
+                                                    previousReminder:
+                                                        reminderlist[index],
+                                                  ));
+                                          widget.f();
+                                        } else {
+                                          Provider.of<ReminderList>(context,
+                                                  listen: false)
+                                              .removeItem(reminderlist[index]);
+                                          //saveData();
+                                          widget.f();
+                                        }
                                         setState(() {});
                                       },
                                       icon: Icon(Icons.more_vert),
@@ -196,16 +203,10 @@ class _Reminder_list_ScreenState extends State<Reminder_list_Screen> {
   //     return NewTodoView();
   //   })).then((title){
   //     if(title != null) {
-  //       addItem(Todo(title: title));
+  //       addItem((title: title));
   //     }
   //   });
   // }
-
-  void addItem(Reminder item) {
-    // Insert an item into the top of our list, on index zero
-    reminderlist.insert(0, item);
-    saveData();
-  }
 
   // void changeItemCompleteness(Reminder item){
   //   setState(() {
@@ -232,24 +233,4 @@ class _Reminder_list_ScreenState extends State<Reminder_list_Screen> {
   //   saveData();
   // }
 
-  void removeItem(Reminder item) {
-    reminderlist.remove(item);
-    saveData();
-  }
-
-  void loadData() {
-    List<String> listString = sharedPreferences.getStringList('list');
-    if (listString != null) {
-      reminderlist = listString
-          .map((item) => Reminder.fromMap(json.decode(item)))
-          .toList();
-      setState(() {});
-    }
-  }
-
-  void saveData() {
-    List<String> stringList =
-        reminderlist.map((item) => json.encode(item.toMap())).toList();
-    sharedPreferences.setStringList('list', stringList);
-  }
 }
