@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:virtualfitnesstrainer/models/reminder.dart';
-import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 class ReminderList with ChangeNotifier {
   List<Reminder> _reminders = [];
