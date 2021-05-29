@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:virtualfitnesstrainer/Provider/ReminderList.dart';
+import 'package:virtualfitnesstrainer/screens/login_screen.dart' as lg;
 import 'screens/homeScreen.dart';
 import 'screens/bmiCalculatorScreen.dart';
 import 'package:provider/provider.dart';
 import 'models/reminder.dart';
+import 'package:virtualfitnesstrainer/screens/signup_screen.dart' as su;
 
 void main() => runApp(MyApp());
 
@@ -32,7 +34,7 @@ class MyApp extends StatelessWidget {
                     fontWeight: FontWeight.bold),
               ),
         ),
-        home: HomeScreen(),
+        home: su.MyApp(),
         routes: {
           //   '/': (ctx) => TabsScreen(),
           // '/BmiCalculaorScreen' :(ctx)=>BmiCalculaorScreen(),

@@ -1,6 +1,8 @@
 import 'package:flutter/services.dart';
 import 'package:virtualfitnesstrainer/models/exercise.dart';
+import 'package:virtualfitnesstrainer/screens/saveWorkoutsScreen.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:virtualfitnesstrainer/models/exercise.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -131,7 +133,15 @@ class _ExerciseVideoScreenState extends State<ExerciseVideoScreen> {
           backgroundColor: Theme.of(context).canvasColor,
           trailing: RaisedButton(
             child: Text('Add'),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SaveWorkoutsScreen(
+                      exercise: selectDescriptionAndVideoUrl(),
+                    ),
+                  ));
+            },
             textColor: Colors.white,
             color: Color(0xffFB376C),
           ),
