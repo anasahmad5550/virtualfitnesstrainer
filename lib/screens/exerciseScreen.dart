@@ -134,6 +134,9 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
 
   @override
   Widget build(BuildContext context) {
+    widget.musclename.forEach((element) {
+      print(element.title);
+    });
     return Scaffold(
       key: key,
       appBar: buildBar(context),
