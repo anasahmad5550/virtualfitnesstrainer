@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "675677302074",
+    "project_id": "virtual-fitness-trainer-e0e86",
+    "storage_bucket": "virtual-fitness-trainer-e0e86.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:675677302074:android:6f87747cabd9d193e2b403",
+        "android_client_info": {
+          "package_name": "com.example.virtualfitnesstrainer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "675677302074-uui4qvmi7nam2s6qet5rkk69bgp9fjtq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqcTnsgsVZDqHwFWxmYCGfOAe28DK_Uv8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "675677302074-uui4qvmi7nam2s6qet5rkk69bgp9fjtq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

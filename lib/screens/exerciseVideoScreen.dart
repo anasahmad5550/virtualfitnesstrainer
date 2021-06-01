@@ -2,7 +2,6 @@ import 'package:flutter/services.dart';
 import 'package:virtualfitnesstrainer/models/exercise.dart';
 import 'package:virtualfitnesstrainer/screens/saveWorkoutsScreen.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-import 'package:virtualfitnesstrainer/models/exercise.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -48,7 +47,7 @@ class _ExerciseVideoScreenState extends State<ExerciseVideoScreen> {
         loop: false,
         isLive: false,
         forceHD: false,
-        enableCaption: true,
+        enableCaption: false,
       ),
     )..addListener(listener);
     _idController = TextEditingController();
@@ -107,16 +106,6 @@ class _ExerciseVideoScreenState extends State<ExerciseVideoScreen> {
               maxLines: 1,
             ),
           ),
-          IconButton(
-            icon: const Icon(
-              Icons.settings,
-              color: Colors.white,
-              size: 25.0,
-            ),
-            onPressed: () {
-              //log('Settings Tapped!');
-            },
-          ),
         ],
         onReady: () {
           _isPlayerReady = true;
@@ -131,19 +120,22 @@ class _ExerciseVideoScreenState extends State<ExerciseVideoScreen> {
         key: _scaffoldKey,
         appBar: CupertinoNavigationBar(
           backgroundColor: Theme.of(context).canvasColor,
-          trailing: RaisedButton(
-            child: Text('Add'),
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => SaveWorkoutsScreen(
-                      exercise: selectDescriptionAndVideoUrl(),
-                    ),
-                  ));
-            },
-            textColor: Colors.white,
-            color: Color(0xffFB376C),
+          trailing: Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: RaisedButton(
+              child: Text('Add'),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SaveWorkoutsScreen(
+                        exercise: selectDescriptionAndVideoUrl(),
+                      ),
+                    ));
+              },
+              textColor: Colors.white,
+              color: Color(0xffFB376C),
+            ),
           ),
           middle: FittedBox(
             child: Text(
@@ -214,83 +206,5 @@ class _ExerciseVideoScreenState extends State<ExerciseVideoScreen> {
     );
   }
 
-  Color _getStateColor(PlayerState state) {
-    switch (state) {
-      case PlayerState.unknown:
-        return Colors.grey[700];
-      case PlayerState.unStarted:
-        return Colors.pink;
-      case PlayerState.ended:
-        return Colors.red;
-      case PlayerState.playing:
-        return Colors.blueAccent;
-      case PlayerState.paused:
-        return Colors.orange;
-      case PlayerState.buffering:
-        return Colors.yellow;
-      case PlayerState.cued:
-        return Colors.blue[900];
-      default:
-        return Colors.blue;
-    }
-  }
-
   Widget get _space => const SizedBox(height: 10);
-
-  Widget _loadCueButton(String action) {
-    return Expanded(
-      child: MaterialButton(
-        color: Colors.blueAccent,
-        onPressed: _isPlayerReady
-            ? () {
-                if (_idController.text.isNotEmpty) {
-                  var id = YoutubePlayer.convertUrlToId(
-                    _idController.text,
-                  );
-                  if (action == 'LOAD') _controller.load(id);
-                  if (action == 'CUE') _controller.cue(id);
-                  FocusScope.of(context).requestFocus(FocusNode());
-                } else {
-                  _showSnackBar('Source can\'t be empty!');
-                }
-              }
-            : null,
-        disabledColor: Colors.grey,
-        disabledTextColor: Colors.black,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 14.0),
-          child: Text(
-            action,
-            style: const TextStyle(
-              fontSize: 18.0,
-              color: Colors.white,
-              fontWeight: FontWeight.w300,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ),
-      ),
-    );
-  }
-
-  void _showSnackBar(String message) {
-    _scaffoldKey.currentState.showSnackBar(
-      SnackBar(
-        content: Text(
-          message,
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            fontWeight: FontWeight.w300,
-            fontSize: 16.0,
-          ),
-        ),
-        backgroundColor: Colors.blueAccent,
-        behavior: SnackBarBehavior.floating,
-        elevation: 1.0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(50.0),
-        ),
-      ),
-    );
-  }
 }

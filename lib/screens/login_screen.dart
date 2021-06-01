@@ -1,9 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:virtualfitnesstrainer/screens/signup_screen.dart';
+import 'homeScreen.dart';
 import 'size_config.dart';
-
-void main() {
-  runApp(MyApp());
-}
 
 class MyApp extends StatelessWidget {
   @override
@@ -28,6 +28,14 @@ class LogInPage extends StatefulWidget {
 }
 
 class _LogInPageState extends State<LogInPage> {
+  String _email;
+  String _password;
+  bool isLoginLoading = false;
+
+  FirebaseAuth _auth = FirebaseAuth.instance;
+
+  UserCredential _user;
+
   Row text(String txt, double fontsize, MainAxisAlignment align, FontWeight fw,
       Color colour, TextDecoration td) {
     return Row(
@@ -60,6 +68,63 @@ class _LogInPageState extends State<LogInPage> {
         onChanged: fn, //code here
       ),
     );
+  }
+
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text('An Error Occurred!'),
+        content: Text(message),
+        actions: <Widget>[
+          TextButton(
+            child: Text('Okay'),
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+          )
+        ],
+      ),
+    );
+  }
+
+  void _tryLogin() async {
+    if (_email.isEmpty || !_email.contains('@')) {
+      _showErrorDialog("Invalid E-mail");
+      return;
+    }
+    if (_password.isEmpty || _password.length < 5) {
+      _showErrorDialog(
+          "Password is too short.Password should be minimum 6 characters");
+      return;
+    }
+    setState(() {
+      isLoginLoading = true;
+    });
+
+    try {
+      _user = await _auth.signInWithEmailAndPassword(
+          email: _email.trim(), password: _password);
+      setState(() {
+        isLoginLoading = false;
+      });
+
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (_) {
+          return HomeScreen();
+        },
+      ));
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        _showErrorDialog('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        _showErrorDialog('Wrong password provided for that user.');
+      }
+    } catch (error) {
+      print(error);
+      _showErrorDialog(
+          "An Error has occurred. Please check your internet connection and try again later ");
+    }
   }
 
   @override
@@ -105,15 +170,15 @@ class _LogInPageState extends State<LogInPage> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          text("Username", 18.0, MainAxisAlignment.start,
+                          text("E-mail", 18.0, MainAxisAlignment.start,
                               FontWeight.w500, Colors.black, null),
-                          textfield("Enter ID", false, (id) {
-                            //code here
+                          textfield("Enter E-mail", false, (email) {
+                            _email = email;
                           }),
                           text("Password", 18.0, MainAxisAlignment.start,
                               FontWeight.w500, Colors.black, null),
                           textfield("Enter Password", true, (password) {
-                            //code here
+                            _password = password;
                           }),
                           GestureDetector(
                             onTap: () {}, //code here
@@ -135,24 +200,30 @@ class _LogInPageState extends State<LogInPage> {
                             child: ButtonTheme(
                               minWidth: 44.444 * SizeConfig.imageSizeMultiplier,
                               height: 7.2 * SizeConfig.heightMultiplier,
-                              child: FlatButton(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                      2.2 * SizeConfig.heightMultiplier),
-                                ),
-                                color: Colors.pink,
+                              child: isLoginLoading
+                                  ? Center(
+                                      child: CircularProgressIndicator(
+                                        color: Theme.of(context).accentColor,
+                                      ),
+                                    )
+                                  : FlatButton(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                            2.2 * SizeConfig.heightMultiplier),
+                                      ),
+                                      color: Colors.pink,
 
-                                onPressed: () {}, //code here
+                                      onPressed: _tryLogin, //code here
 
-                                child: Text(
-                                  "Login",
-                                  style: TextStyle(
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.w900,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
+                                      child: Text(
+                                        "Login",
+                                        style: TextStyle(
+                                          fontSize: 20.0,
+                                          fontWeight: FontWeight.w900,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
                             ),
                           ),
                           text(
@@ -163,7 +234,12 @@ class _LogInPageState extends State<LogInPage> {
                               Colors.black,
                               null),
                           GestureDetector(
-                            onTap: () {}, //code here
+                            onTap: () {
+                              Navigator.of(context)
+                                  .push(MaterialPageRoute(builder: (_) {
+                                return SignUpPage();
+                              }));
+                            },
                             child: text(
                                 "Create Account",
                                 12.0,

@@ -23,15 +23,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  sqflite: ^2.0.0+3
-  path_provider: ^2.0.1
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
   font_awesome_flutter: ^8.11.0
   persistent_bottom_nav_bar: ^3.1.0
-  intl: ^0.16.1
+  intl: ^0.17.0
   youtube_player_flutter: ^7.0.0+7
   flutter_local_notifications: ^5.0.0+1
   shared_preferences: ^2.0.5
@@ -40,6 +39,14 @@ dependencies:
   flutter_native_timezone: ^1.0.0
   provider: ^5.0.0
   material_design_icons_flutter: 4.0.5955
+  cloud_firestore: ^2.2.0
+  firebase_auth: ^1.2.0
+  firebase_core: ^1.2.0
+  google_sign_in: ^5.0.4
+  flutter_facebook_auth: ^3.4.0
+  flutter_facebook_login: ^3.0.0
+  sqflite: ^2.0.0+3
+  path_provider: ^2.0.1
 
 
 

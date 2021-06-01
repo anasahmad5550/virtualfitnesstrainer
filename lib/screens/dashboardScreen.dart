@@ -139,17 +139,18 @@ class _DashboardState extends State<Dashboard> {
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white),
                                     ),
-                                    Text(
-                                      //'kk',
-                                      DateFormat('hh:mm a ').format(
-                                          upComingReminder
-                                              .comingReminder()
-                                              .time),
-                                      style: TextStyle(
-                                          fontSize: 28,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.pink),
-                                    ),
+                                    if (upComingReminder.reminderList.length >
+                                        0)
+                                      Text(
+                                        DateFormat('hh:mm a ').format(
+                                            upComingReminder
+                                                .comingReminder()
+                                                .time),
+                                        style: TextStyle(
+                                            fontSize: 28,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.pink),
+                                      ),
                                   ],
                                 ),
                               ),
