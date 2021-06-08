@@ -85,9 +85,7 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    print('1');
     final upComingReminder = Provider.of<ReminderList>(context, listen: false);
-    print('2');
 
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,

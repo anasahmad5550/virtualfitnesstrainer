@@ -1,15 +1,18 @@
 import 'package:flutter/services.dart';
+import 'package:virtualfitnesstrainer/helpers/saveWorkouts.dart';
 import 'package:virtualfitnesstrainer/models/exercise.dart';
 import 'package:virtualfitnesstrainer/screens/saveWorkoutsScreen.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 
 class ExerciseVideoScreen extends StatefulWidget {
   final String exerciseName;
   final List muscleName;
-  ExerciseVideoScreen({this.exerciseName, this.muscleName});
+  final String listName;
+  ExerciseVideoScreen({this.exerciseName, this.muscleName, this.listName});
   @override
   _ExerciseVideoScreenState createState() => _ExerciseVideoScreenState();
 }
@@ -17,6 +20,7 @@ class ExerciseVideoScreen extends StatefulWidget {
 class _ExerciseVideoScreenState extends State<ExerciseVideoScreen> {
   String descriptionEx;
   String id;
+  bool checkpresentInSaveWorkout;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   YoutubePlayerController _controller;
   TextEditingController _idController;
@@ -28,6 +32,13 @@ class _ExerciseVideoScreenState extends State<ExerciseVideoScreen> {
   bool _muted = false;
   bool _isPlayerReady = false;
 
+  Exercise AddedExercise() {
+    Exercise e = widget.muscleName
+        .firstWhere((element) => widget.exerciseName == element.title);
+    e.iPresentinSaveWorkout = true;
+    return e;
+  }
+
   Exercise selectDescriptionAndVideoUrl() {
     return widget.muscleName
         .firstWhere((element) => widget.exerciseName == element.title);
@@ -37,6 +48,8 @@ class _ExerciseVideoScreenState extends State<ExerciseVideoScreen> {
   void initState() {
     descriptionEx = selectDescriptionAndVideoUrl().description;
     id = selectDescriptionAndVideoUrl().videoUrlID;
+    checkpresentInSaveWorkout =
+        selectDescriptionAndVideoUrl().iPresentinSaveWorkout;
     super.initState();
     _controller = YoutubePlayerController(
       initialVideoId: id,
@@ -78,6 +91,24 @@ class _ExerciseVideoScreenState extends State<ExerciseVideoScreen> {
     _idController.dispose();
     _seekToController.dispose();
     super.dispose();
+  }
+
+  void AddOrRemove() async {
+    if (!checkpresentInSaveWorkout) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SaveWorkoutsScreen(
+              exercise: AddedExercise(),
+            ),
+          ));
+    } else {
+      await Provider.of<Saveworkouts>(context, listen: false)
+          .RemoveExcerciseFromList(widget.exerciseName, widget.listName);
+      var nav = Navigator.of(context);
+      nav.pop();
+      nav.pop();
+    }
   }
 
   @override
@@ -123,16 +154,8 @@ class _ExerciseVideoScreenState extends State<ExerciseVideoScreen> {
           trailing: Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: RaisedButton(
-              child: Text('Add'),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SaveWorkoutsScreen(
-                        exercise: selectDescriptionAndVideoUrl(),
-                      ),
-                    ));
-              },
+              child: Text(checkpresentInSaveWorkout ? 'Remove' : 'Add'),
+              onPressed: AddOrRemove,
               textColor: Colors.white,
               color: Color(0xffFB376C),
             ),
@@ -143,9 +166,14 @@ class _ExerciseVideoScreenState extends State<ExerciseVideoScreen> {
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
             ),
           ),
-          leading: Icon(
-            Icons.arrow_back_ios,
-            size: 20,
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back_ios,
+              size: 20,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
           ),
         ),
         body: Padding(

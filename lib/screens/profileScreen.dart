@@ -1,31 +1,296 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:image_picker/image_picker.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
+  @override
+  _ProfilePageState createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  final _auth = FirebaseAuth.instance;
+  Map<String, dynamic> data;
+  String _name;
+  String _imgUrl;
+  String _email;
+
+  File _image;
+  final picker = ImagePicker();
+
+  Future getImage(String name) async {
+    PickedFile pickedFile;
+    await showDialog(
+        context: context,
+        builder: (BuildContext cont) => AlertDialog(
+              title: Text("Image"),
+              content: Text("Please select one"),
+              actions: [
+                FlatButton(
+                  child: Text("Take Photo"),
+                  onPressed: () async {
+                    pickedFile = await picker.getImage(
+                        source: ImageSource.camera,
+                        imageQuality: 100,
+                        maxWidth: 150);
+                    Navigator.of(cont).pop();
+                  },
+                ),
+                FlatButton(
+                  child: Text("gallery"),
+                  onPressed: () async {
+                    pickedFile = await picker.getImage(
+                        source: ImageSource.gallery,
+                        imageQuality: 100,
+                        maxWidth: 150);
+                    Navigator.of(cont).pop();
+                  },
+                ),
+              ],
+            ));
+
+    setState(() {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+      } else {
+        print('No image selected.');
+      }
+    });
+
+    final ref = FirebaseStorage.instance
+        .ref()
+        .child('user_image')
+        .child(_auth.currentUser.uid + '.jpg');
+
+    TaskSnapshot snapshot = await ref.putFile(_image);
+    final url = await snapshot.ref.getDownloadURL();
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(_auth.currentUser.uid)
+        .set({'image_url': url, 'name': name});
+    //await FindName();
+    setState(() {});
+  }
+
+  Widget textfield({@required String hintText = ""}) {
+    return Material(
+      elevation: 4,
+      shadowColor: Colors.grey,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: TextField(
+        decoration: InputDecoration(
+          hintText: hintText,
+          hintStyle: TextStyle(
+            letterSpacing: 2,
+            color: Color(0xffFB376C),
+            fontWeight: FontWeight.bold,
+          ),
+          fillColor: Colors.white30,
+          filled: true,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide.none,
+          ),
+        ),
+      ),
+    );
+  }
+
+  // Future<void> FindName() async {
+  //   await FirebaseFirestore.instance
+  //       .collection("users")
+  //       .doc(_auth.currentUser.uid)
+  //       .get()
+  //       .then((DocumentSnapshot documentSnapshot) {
+  //     if (documentSnapshot.exists) {
+  //       print('Document data: ${documentSnapshot.data()}');
+  //       data = documentSnapshot.data();
+  //       print(data['name']);
+  //     }
+  //   });
+  // }
+
   @override
   Widget build(BuildContext context) {
-    final _auth = FirebaseAuth.instance;
-    print(_auth.currentUser.photoURL);
-    return Container(
-      child: Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(_auth.currentUser.displayName),
-          Text(_auth.currentUser.email),
-          CircleAvatar(
-            radius: 100,
-            backgroundImage: NetworkImage(_auth.currentUser.photoURL),
-          ),
-          TextButton(
-            child: Text('Log out'),
-            onPressed: () async {
-              await FirebaseAuth.instance.signOut();
-            },
-          ),
-        ],
-      )),
+    //print(_auth.currentUser.uid);
+    //FindName();
+
+    return FutureBuilder(
+      future: FirebaseFirestore.instance
+          .collection("users")
+          .doc(_auth.currentUser.uid)
+          .get(),
+      builder: (context, snapshot) => snapshot.connectionState ==
+              ConnectionState.waiting
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : Scaffold(
+              appBar: AppBar(
+                elevation: 0.0,
+                backgroundColor: Theme.of(context).accentColor,
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.logout),
+                      onPressed: () async {
+                        await FirebaseAuth.instance.signOut();
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              body: Stack(
+                alignment: Alignment.center,
+                children: <Widget>[
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      Container(
+                        height: 450,
+                        width: double.infinity,
+                        margin: EdgeInsets.symmetric(horizontal: 10),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 16.0),
+                              child: textfield(
+                                  hintText: snapshot.data['name'] != null
+                                      ? snapshot.data['name']
+                                      : 'n'
+                                  //data['name']
+                                  ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 16.0),
+                              child:
+                                  textfield(hintText: _auth.currentUser.email),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  CustomPaint(
+                    size: Size(30, 30),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
+                    ),
+                    painter: HeaderCurvedContainer(),
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.all(20),
+                        child: GestureDetector(
+                          onTap: () {
+                            print("object");
+                          },
+                          child: Text(
+                            "Profile",
+                            style: TextStyle(
+                              fontSize: 35,
+                              letterSpacing: 1.5,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ),
+                      CircleAvatar(
+                        backgroundImage: snapshot.data['image_url'] != null
+                            ? NetworkImage(snapshot.data['image_url'])
+                            : null,
+                        radius: (MediaQuery.of(context).size.width / 2) / 2,
+                        // padding: EdgeInsets.all(10.0),
+                        // width: MediaQuery.of(context).size.width / 2,
+                        // height: MediaQuery.of(context).size.width / 2,
+                        // decoration: BoxDecoration(
+                        //   border: Border.all(
+                        //     color: Colors.white,
+                        //     width: 5,
+                        //   ),
+                        //   shape: BoxShape.circle,
+                        //   color: Colors.white,
+                        // ),
+                        child: FittedBox(
+                          child: snapshot.data['image_url'] == null
+                              ? Icon(
+                                  Icons.person,
+                                  color: Colors.grey[600],
+                                )
+                              : null,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 270, left: 184),
+                    child: CircleAvatar(
+                      backgroundColor: Colors.black54,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.camera_alt_rounded,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          getImage(snapshot.data['name']);
+                        }, //change profile pic icon code
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
     );
   }
 }
+
+class HeaderCurvedContainer extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    Paint paint = Paint()..color = Color(0xffFB376C);
+    Path path = Path()
+      ..relativeLineTo(0, 150)
+      ..quadraticBezierTo(size.width / 2, 225, size.width, 150)
+      ..relativeLineTo(0, -150)
+      ..close();
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => false;
+}
+// Container(
+// padding: EdgeInsets.all(10.0),
+// width: MediaQuery.of(context).size.width / 2,
+// height: MediaQuery.of(context).size.width / 2,
+// decoration: BoxDecoration(
+// border: Border.all(
+// color: Colors.white,
+// width: 5,
+// ),
+// shape: BoxShape.circle,
+// color: Colors.white,
+// ),
+// child: FittedBox(
+// child: data['image_url'] != null
+// ? Image.network(data['image_url'])
+// : Icon(
+// Icons.person,
+// color: Colors.grey[600],
+// ),
+// ),
+// ),

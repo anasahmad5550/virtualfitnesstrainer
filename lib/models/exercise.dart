@@ -3,6 +3,12 @@ class Exercise {
   final String title;
   final String videoUrlID;
   final String description;
+  bool iPresentinSaveWorkout;
 
-  const Exercise({this.title, this.imgurl, this.videoUrlID, this.description});
+  Exercise(
+      {this.title,
+      this.imgurl,
+      this.videoUrlID,
+      this.description,
+      this.iPresentinSaveWorkout = false});
 }

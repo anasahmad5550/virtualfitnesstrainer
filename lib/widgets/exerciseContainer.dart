@@ -5,8 +5,9 @@ class ExerciseContainer extends StatelessWidget {
   final String title;
   final List muscle;
   final String imgurL;
+  final String listName;
 
-  ExerciseContainer({this.title, this.imgurL, this.muscle});
+  ExerciseContainer({this.title, this.imgurL, this.muscle, this.listName});
   // void selectCategory(BuildContext ctx) {
   //   Navigator.of(ctx)
   //       .pushNamed(MealScreen.routeid, arguments: {'id': id, 'title': title});
@@ -15,6 +16,7 @@ class ExerciseContainer extends StatelessWidget {
     Navigator.of(context).push(MaterialPageRoute(
       builder: (_) {
         return ExerciseVideoScreen(
+          listName: listName,
           exerciseName: exercName,
           muscleName: muscle,
         );

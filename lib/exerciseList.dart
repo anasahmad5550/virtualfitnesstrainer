@@ -1,6 +1,6 @@
 import 'package:virtualfitnesstrainer/models/exercise.dart';
 
-const List<Exercise> chestList = const [
+List<Exercise> chestList = [
   Exercise(
     title: 'Bench Press',
     imgurl: 'benchPress.jpg',
@@ -82,7 +82,7 @@ const List<Exercise> chestList = const [
       videoUrlID: 'JyCG_5l3XLk'),
 ];
 
-const List<Exercise> absList = const [
+List<Exercise> absList = [
   Exercise(
     title: 'Dumbbell crunch',
     imgurl: 'Dumbbell crunch.jpg',
@@ -155,7 +155,7 @@ const List<Exercise> absList = const [
   ),
 ];
 
-const List<Exercise> shoulderList = const [
+List<Exercise> shoulderList = [
   Exercise(
     title: 'Barbell Overhead Shoulder Press',
     imgurl: 'Barbell Overhead Shoulder Press.jpg',
@@ -235,7 +235,7 @@ const List<Exercise> shoulderList = const [
   ),
 ];
 
-const List<Exercise> bicepsList = const [
+List<Exercise> bicepsList = [
   Exercise(
     title: 'Alternating Incline Dumbbell Curl',
     imgurl: 'alternating incline dumbbell curl.png',
@@ -308,7 +308,7 @@ const List<Exercise> bicepsList = const [
   ),
 ];
 
-const List<Exercise> tricepsList = const [
+List<Exercise> tricepsList = [
   Exercise(
     title: 'Close-Grip Bench Press',
     imgurl: 'Close-Grip Bench Press.jpg',
@@ -374,7 +374,7 @@ const List<Exercise> tricepsList = const [
   ),
 ];
 
-const List<Exercise> backList = const [
+List<Exercise> backList = [
   Exercise(
     title: 'Quadruped dumbbell row',
     imgurl: 'Quadruped dumbbell row.jpg',
@@ -447,7 +447,7 @@ const List<Exercise> backList = const [
   ),
 ];
 
-const List<Exercise> legsList = const [
+List<Exercise> legsList = [
   Exercise(
     title: 'Goblet squat',
     imgurl: 'Goblet squat.jpg',

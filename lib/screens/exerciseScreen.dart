@@ -16,7 +16,7 @@ class ExerciseScreen extends StatefulWidget {
 
 class _ExerciseScreenState extends State<ExerciseScreen> {
   Widget appBarTitle = Text(
-    "VFT",
+    'Exercises',
     style: TextStyle(color: Colors.white),
   );
   Icon actionIcon = Icon(
@@ -26,7 +26,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
   final key = GlobalKey<ScaffoldState>();
   final TextEditingController _searchQuery = TextEditingController();
   List<Exercise> _list;
-  List<Exercise> _searchList = List();
+  List<Exercise> _searchList = [];
   bool _IsSearching;
   String _searchText = "";
   _ExerciseScreenState() {
@@ -50,7 +50,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
   void initState() {
     super.initState();
     _IsSearching = false;
-    _list = List();
+    _list = [];
     _list = widget.musclename;
     _searchList = _list;
   }
@@ -134,9 +134,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
 
   @override
   Widget build(BuildContext context) {
-    widget.musclename.forEach((element) {
-      print(element.title);
-    });
+    final String title = widget.muscleCategory;
     return Scaffold(
       key: key,
       appBar: buildBar(context),
@@ -150,6 +148,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
         ),
         itemBuilder: (context, index) {
           return ExerciseContainer(
+            listName: widget.muscleCategory,
             title: _searchList[index].title,
             imgurL: _searchList[index].imgurl,
             muscle: widget.musclename,

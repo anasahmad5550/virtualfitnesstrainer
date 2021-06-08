@@ -171,10 +171,16 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   Future<void> _AddExtraData() async {
+    String nameN;
+    if (_user.user.displayName != null) {
+      nameN = _user.user.displayName.trim();
+    } else {
+      nameN = _name;
+    }
     final a = await FirebaseFirestore.instance
         .collection("users")
         .doc(_user.user.uid)
-        .set({"name": _user.user.displayName.trim()});
+        .set({"name": nameN});
     return a;
   }
 

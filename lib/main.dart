@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'helpers/saveWorkouts.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,8 +18,15 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => ReminderList(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(
+          value: ReminderList(),
+        ),
+        ChangeNotifierProvider.value(
+          value: Saveworkouts(),
+        )
+      ],
       child: MaterialApp(
         title: 'VFT',
         theme: ThemeData(
