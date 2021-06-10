@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:virtualfitnesstrainer/Provider/ReminderList.dart';
 import 'package:virtualfitnesstrainer/screens/login_screen.dart' as lg;
 import 'screens/homeScreen.dart';
@@ -12,6 +13,7 @@ import 'helpers/saveWorkouts.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(MyApp());
 }
 

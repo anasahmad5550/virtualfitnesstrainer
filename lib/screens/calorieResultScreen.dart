@@ -33,8 +33,6 @@ class CalorieResultScreen extends StatelessWidget {
                 shape: CircleBorder(),
                 elevation: 20,
                 child: Container(
-                  //padding: EdgeInsets.all(15.0),
-                  //margin: EdgeInsets.all(15.0),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20.0),
                     color: Colors.white,
@@ -135,18 +133,13 @@ class CalorieResultScreen extends StatelessWidget {
                         color: Theme.of(context).accentColor,
                       ),
                       child: Center(
-                          child: Text('Re-Calculate',
+                          child: const Text('Re-Calculate',
                               style: TextStyle(color: Colors.white))),
                     ),
                   ],
                 ),
               ),
             )
-            // Reusablebutton(
-            //      textbutton: 'RE-CALCULATE',
-            //      onpress: () {
-            //        Navigator.pop(context);
-            //      }),
           ],
         ),
       ),

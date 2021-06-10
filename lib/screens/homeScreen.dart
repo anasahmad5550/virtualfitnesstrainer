@@ -14,10 +14,11 @@ class HomeScreen extends StatefulWidget {
 
 List<Widget> _buildScreens() {
   return [
-    SaveWorkoutsScreen(),
-    CalorieCalculatorScreen(),
     Dashboard(),
-    SettingScreen(),
+
+    CalorieCalculatorScreen(),
+    SaveWorkoutsScreen(),
+    //SettingScreen(),
     ProfilePage()
   ];
 }
@@ -40,11 +41,13 @@ class _HomeScreenState extends State<HomeScreen> {
     List<PersistentBottomNavBarItem> _navBarsItems() {
       return [
         PersistentBottomNavBarItem(
-          icon: Icon(Icons.folder),
-          title: ("Workouts"),
+          icon: Icon(Icons.home),
+          title: ("Home"),
+          //activeColorPrimary: Color(0xffFB376C),
           activeColorPrimary: Theme.of(context).accentColor,
           inactiveColorPrimary: CupertinoColors.systemGrey,
         ),
+
         PersistentBottomNavBarItem(
           icon: Icon(Icons.calculate),
           title: ("KCAL"),
@@ -52,18 +55,18 @@ class _HomeScreenState extends State<HomeScreen> {
           inactiveColorPrimary: CupertinoColors.systemGrey,
         ),
         PersistentBottomNavBarItem(
-          icon: Icon(Icons.home),
-          title: ("Home"),
-          activeColorPrimary: Color(0xffFB376C),
-          activeColorSecondary: Colors.white,
-          inactiveColorPrimary: CupertinoColors.systemGrey,
-        ),
-        PersistentBottomNavBarItem(
-          icon: Icon(Icons.device_unknown),
-          title: ("unk"),
+          icon: Icon(Icons.folder),
+          title: ("Workouts"),
           activeColorPrimary: Theme.of(context).accentColor,
           inactiveColorPrimary: CupertinoColors.systemGrey,
         ),
+
+        // PersistentBottomNavBarItem(
+        //   icon: Icon(Icons.device_unknown),
+        //   title: ("unk"),
+        //   activeColorPrimary: Theme.of(context).accentColor,
+        //   inactiveColorPrimary: CupertinoColors.systemGrey,
+        // ),
         PersistentBottomNavBarItem(
           icon: Icon(Icons.account_circle),
           title: ("profile"),
@@ -75,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     PersistentTabController _controller;
 
-    _controller = PersistentTabController(initialIndex: 2);
+    _controller = PersistentTabController(initialIndex: 0);
     return SafeArea(
       child: Scaffold(
         // body: PageStorage(
@@ -128,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
             duration: Duration(milliseconds: 200),
           ),
           navBarStyle: NavBarStyle
-              .style15, // Choose the nav bar style with this property.
+              .style13, // Choose the nav bar style with this property.
         ),
       ),
     );

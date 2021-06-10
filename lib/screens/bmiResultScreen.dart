@@ -22,7 +22,7 @@ class BmiResult extends StatelessWidget {
             Expanded(
               child: Container(
                 child: Center(
-                  child: Text(
+                  child: const Text(
                     'Your Result',
                     style: kresult,
                   ),
@@ -81,7 +81,7 @@ class BmiResult extends StatelessWidget {
                         color: Theme.of(context).accentColor,
                       ),
                       child: Center(
-                          child: Text('Re-Calculate',
+                          child: const Text('Re-Calculate',
                               style: TextStyle(color: Colors.white))),
                     ),
                   ],

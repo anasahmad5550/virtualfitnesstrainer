@@ -11,7 +11,7 @@ class SizeConfig {
   static double imageSizeMultiplier;
   static double heightMultiplier;
 
-  void init(BoxConstraints constraints){
+  void init(BoxConstraints constraints) {
     _screenWidth = constraints.maxWidth;
     _screenHeight = constraints.minHeight;
 
@@ -22,8 +22,7 @@ class SizeConfig {
     imageSizeMultiplier = _blockSizeHorizontal;
     heightMultiplier = _blockSizeVertical;
 
-    print("vertical:  " + _blockSizeVertical.toString());
-    print("horizontal:  " + _blockSizeHorizontal.toString());
+    // print("vertical:  " + _blockSizeVertical.toString());
+    // print("horizontal:  " + _blockSizeHorizontal.toString());
   }
-
 }

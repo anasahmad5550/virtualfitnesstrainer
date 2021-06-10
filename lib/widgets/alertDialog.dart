@@ -30,8 +30,6 @@ class _DialogState extends State<Dialog> {
       if (value == null)
         return;
       else {
-        //final now = new DateTime.now();
-        print('hello');
         val = DateTime(dt.year, dt.month, dt.day, value.hour, value.minute);
       }
 
@@ -54,7 +52,7 @@ class _DialogState extends State<Dialog> {
         text: titleVal == null ? widget.previousReminder.title : titleVal);
     return AlertDialog(
       scrollable: true,
-      title: Text('Edit Reminder'),
+      title: const Text('Edit Reminder'),
       content: Column(
         children: [
           TextField(
@@ -81,7 +79,7 @@ class _DialogState extends State<Dialog> {
                     onPressed: () {
                       _selecttime(widget.previousReminder.time);
                     },
-                    child: Text('select time'))
+                    child: const Text('select time'))
               ],
             ),
           ),
@@ -92,7 +90,7 @@ class _DialogState extends State<Dialog> {
             onPressed: () {
               Navigator.of(context, rootNavigator: true).pop('dialog');
             },
-            child: Text('cancel')),
+            child: const Text('cancel')),
         ElevatedButton(
             onPressed: () {
               if (_controller.text == '' || _controller.text == ' ') return;
@@ -103,7 +101,7 @@ class _DialogState extends State<Dialog> {
               rlist.editchanges(widget.previousReminder.id, newR);
               Navigator.of(context).pop();
             },
-            child: Text('save')),
+            child: const Text('save')),
       ],
     );
   }

@@ -8,10 +8,7 @@ class ExerciseContainer extends StatelessWidget {
   final String listName;
 
   ExerciseContainer({this.title, this.imgurL, this.muscle, this.listName});
-  // void selectCategory(BuildContext ctx) {
-  //   Navigator.of(ctx)
-  //       .pushNamed(MealScreen.routeid, arguments: {'id': id, 'title': title});
-  // }
+
   void pushexerciseVideo(BuildContext context, String exercName) {
     Navigator.of(context).push(MaterialPageRoute(
       builder: (_) {
@@ -22,20 +19,15 @@ class ExerciseContainer extends StatelessWidget {
         );
       },
     ));
-    // Navigator.of(context).pushNamed(BmiCalculaorScreen.routeid);
   }
 
   @override
   Widget build(BuildContext context) {
-    //final height = MediaQuery.of(context).size.height;
     return InkWell(
       onTap: () => pushexerciseVideo(context, title),
-      //() => selectCategory(context),
       splashColor: Theme.of(context).primaryColor,
-
       child: Container(
         height: 200,
-        // width: 100,
         child: Column(
           children: [
             Expanded(
@@ -62,7 +54,6 @@ class ExerciseContainer extends StatelessWidget {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
             color: Theme.of(context).accentColor),
-        //padding: EdgeInsets.all(15),
       ),
     );
   }

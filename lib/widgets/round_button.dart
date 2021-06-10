@@ -6,6 +6,7 @@ class RoundIconButton extends StatelessWidget {
   final Function onpress;
   @override
   Widget build(BuildContext context) {
+    final mediaQ = MediaQuery.of(context);
     return RawMaterialButton(
       child: Icon(
         icon,
@@ -17,9 +18,7 @@ class RoundIconButton extends StatelessWidget {
       fillColor: Theme.of(context).accentColor,
       elevation: 6.0,
       constraints: BoxConstraints.tightFor(
-        height: (MediaQuery.of(context).size.height -
-                MediaQuery.of(context).padding.top) *
-            0.07,
+        height: (mediaQ.size.height - mediaQ.padding.top) * 0.07,
         width: 56.0,
       ),
     );

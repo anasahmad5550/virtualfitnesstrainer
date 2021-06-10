@@ -353,7 +353,7 @@ List<Exercise> tricepsList = [
   ),
   Exercise(
     title: ' One-Arm Overhead Extension',
-    imgurl: ' One-Arm Overhead Extension.jpg',
+    imgurl: 'One-Arm Overhead Extension.jpg',
     description:
         'Sit perfectly upright on a workout bench and grab a dumbbell with one hand. Holding the dumbbell, lift your arm slightly behind your head with your elbow bent. Extend your elbow until your arm is straight overhead. Perform 10 reps with one arm before switching to the other to round out the set.',
     videoUrlID: 'je8iFz9nk18',

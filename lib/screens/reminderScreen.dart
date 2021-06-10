@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:virtualfitnesstrainer/models/notification.dart';
 import 'package:virtualfitnesstrainer/models/reminder.dart';
 import 'package:intl/intl.dart';
 
@@ -73,6 +74,9 @@ class _Reminder_list_ScreenState extends State<Reminder_list_Screen> {
     allReminderNotification();
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Reminders'),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _startAddNewReminder(context),
         child: Icon(
@@ -83,16 +87,11 @@ class _Reminder_list_ScreenState extends State<Reminder_list_Screen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
-                child: Text(
-              'Reminder',
-              style: TextStyle(
-                  fontSize: width * 0.08, fontWeight: FontWeight.bold),
-            )),
             Container(
               child: Text(
                 'Today Upcomings',
-                style: TextStyle(fontSize: width * 0.07),
+                style: TextStyle(
+                    fontSize: width * 0.07, fontWeight: FontWeight.bold),
               ),
               //padding: EdgeInsets.all(12),
               margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
@@ -104,12 +103,7 @@ class _Reminder_list_ScreenState extends State<Reminder_list_Screen> {
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () async {
-                          //await NotifPlug.showNotification();
                           print('click');
-
-                          // await NotifPlug.showWeeklyAtDayTime(
-                          //     reminderlist[index].time,
-                          //     reminderlist[index].title);
                         },
                         child: Container(
                           padding: EdgeInsets.all(12),

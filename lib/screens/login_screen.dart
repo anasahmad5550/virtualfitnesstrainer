@@ -142,7 +142,9 @@ class _LogInPageState extends State<LogInPage> {
                 child: Container(
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('images/home.jpg'),
+                      image: AssetImage(
+                        'images/home.jpg',
+                      ),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -172,16 +174,18 @@ class _LogInPageState extends State<LogInPage> {
                         children: <Widget>[
                           text("E-mail", 18.0, MainAxisAlignment.start,
                               FontWeight.w500, Colors.black, null),
-                          textfield("Enter E-mail", false, (email) {
+                          textfield("xyz@xyz.com", false, (email) {
                             _email = email;
                           }),
                           text("Password", 18.0, MainAxisAlignment.start,
                               FontWeight.w500, Colors.black, null),
-                          textfield("Enter Password", true, (password) {
+                          textfield("********", true, (password) {
                             _password = password;
                           }),
                           GestureDetector(
-                            onTap: () {}, //code here
+                            onTap: () {
+                              //todo
+                            }, //code here
 
                             child: text(
                                 "Forgot Password?",

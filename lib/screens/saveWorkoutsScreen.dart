@@ -142,6 +142,9 @@ class _SaveWorkoutsScreenState extends State<SaveWorkoutsScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
+      appBar: AppBar(
+        title: Text('Save Workouts'),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showbottomheet();
@@ -172,7 +175,6 @@ class _SaveWorkoutsScreenState extends State<SaveWorkoutsScreen> {
                                     flex: 1,
                                     child: Container(
                                       decoration: BoxDecoration(
-                                        color: Colors.white,
                                         borderRadius: BorderRadius.only(
                                           topLeft: Radius.circular(20.0),
                                           topRight: Radius.circular(20.0),
@@ -185,25 +187,17 @@ class _SaveWorkoutsScreenState extends State<SaveWorkoutsScreen> {
                                           itemBuilder: (BuildContext context,
                                               int index) {
                                             return ListTile(
-                                                // leading: IconButton(
-                                                //   icon: Icon(
-                                                //     Icons.delete,
-                                                //   ),
-                                                //   onPressed: () async {
-                                                //     await savelist.removelistfromDB(
-                                                //         savelist.saveWorkoutList[
-                                                //             index]);
-                                                //   },
-                                                // ),
                                                 title: Container(
                                                   height: 50,
                                                   margin: EdgeInsets.all(2),
-                                                  color: Colors.blue[400],
+                                                  color: Theme.of(context)
+                                                      .primaryColor,
                                                   child: Center(
                                                       child: Text(
                                                     '${savelist.saveWorkoutList[index]} ',
-                                                    style:
-                                                        TextStyle(fontSize: 18),
+                                                    style: TextStyle(
+                                                        fontSize: 18,
+                                                        color: Colors.white),
                                                   )),
                                                 ),
                                                 onLongPress: () {

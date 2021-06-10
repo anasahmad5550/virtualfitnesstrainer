@@ -1,5 +1,3 @@
-//import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
@@ -8,6 +6,8 @@ import 'dart:io' show Platform;
 import 'package:rxdart/rxdart.dart';
 import 'package:virtualfitnesstrainer/models/timezone.dart';
 import 'package:timezone/timezone.dart' as tz;
+
+import 'package:virtualfitnesstrainer/models/notification.dart';
 
 class notificationPlugin {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
@@ -163,8 +163,8 @@ class notificationPlugin {
     );
     await flutterLocalNotificationsPlugin.zonedSchedule(
         id,
-        'Test Title at ${datetime.hour}:${datetime.minute}.${datetime.second}',
-        'its $title time ', //null
+        '$title time ${datetime.hour}:${datetime.minute}.${datetime.second}',
+        'Reminder ', //null
         _nextInstanceOfSundayAndSaturdayAtSpecificDate(datetime, location),
         //scheduledDate,
         //tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)),
@@ -179,17 +179,3 @@ class notificationPlugin {
 }
 
 notificationPlugin NotifPlug = notificationPlugin();
-
-class ReceivedNotification {
-  final int id;
-  final String title;
-  final String body;
-  final String payload;
-
-  ReceivedNotification({
-    @required this.id,
-    @required this.title,
-    @required this.body,
-    @required this.payload,
-  });
-}

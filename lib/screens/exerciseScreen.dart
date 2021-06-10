@@ -15,11 +15,11 @@ class ExerciseScreen extends StatefulWidget {
 }
 
 class _ExerciseScreenState extends State<ExerciseScreen> {
-  Widget appBarTitle = Text(
+  Widget appBarTitle = const Text(
     'Exercises',
     style: TextStyle(color: Colors.white),
   );
-  Icon actionIcon = Icon(
+  Icon actionIcon = const Icon(
     Icons.search,
     color: Color(0xffFB376C),
   );
@@ -98,11 +98,11 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
 
   void _handleSearchEnd() {
     setState(() {
-      this.actionIcon = Icon(
+      this.actionIcon = const Icon(
         Icons.search,
         color: Colors.orange,
       );
-      this.appBarTitle = Text(
+      this.appBarTitle = const Text(
         "My Properties",
         style: TextStyle(color: Colors.white),
       );
@@ -116,25 +116,17 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
       return _searchList =
           _list; //_list.map((contact) =>  Uiitem(contact)).toList();
     } else {
-      /*for (int i = 0; i < _list.length; i++) {
-        String name = _list.elementAt(i);
-        if (name.toLowerCase().contains(_searchText.toLowerCase())) {
-          _searchList.add(name);
-        }
-      }*/
-
       _searchList = _list
           .where((element) =>
               element.title.toLowerCase().contains(_searchText.toLowerCase()))
           .toList();
       print('${_searchList.length}');
-      return _searchList; //_searchList.map((contact) =>  Uiitem(contact)).toList();
+      return _searchList;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final String title = widget.muscleCategory;
     return Scaffold(
       key: key,
       appBar: buildBar(context),

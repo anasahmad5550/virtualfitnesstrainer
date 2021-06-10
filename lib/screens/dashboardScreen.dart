@@ -11,6 +11,7 @@ import 'reminderScreen.dart';
 import 'package:virtualfitnesstrainer/models/reminder.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'screen.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -24,23 +25,17 @@ class _DashboardState extends State<Dashboard> {
   void loadSharedPreferencesAndData() async {
     sharedPreferences = await SharedPreferences.getInstance();
     indicator = false;
-
-    print('/');
     loadData();
     setState(() {});
-    //print(reminderlist.length);
-    //await allReminderNotification();
   }
 
   void loadData() {
     List<String> listString = sharedPreferences.getStringList('list');
     if (listString != null) {
-      print('..1');
       Provider.of<ReminderList>(context, listen: false).Setreminder = listString
           .map((item) => Reminder.fromMap(json.decode(item)))
           .toList();
       print('..2');
-      //setState(() {});
     }
   }
 
@@ -64,7 +59,12 @@ class _DashboardState extends State<Dashboard> {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) {
       return ExerciseMuscleGroupScreen();
     }));
-    // Navigator.of(context).pushNamed(BmiCalculaorScreen.routeid);
+  }
+
+  void pushDietPlan(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      return DietPlanscreen();
+    }));
   }
 
   void pushbmi(BuildContext context) {
@@ -86,7 +86,7 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     final upComingReminder = Provider.of<ReminderList>(context, listen: false);
-
+    final medaiQ = MediaQuery.of(context);
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       body: indicator
@@ -95,9 +95,7 @@ class _DashboardState extends State<Dashboard> {
               children: [
                 SafeArea(
                   child: Container(
-                    height: (MediaQuery.of(context).size.height -
-                            MediaQuery.of(context).padding.top) *
-                        0.31,
+                    height: (medaiQ.size.height - medaiQ.padding.top) * 0.31,
                     width: double.infinity,
                     child: Stack(
                       alignment: Alignment.center,
@@ -111,11 +109,9 @@ class _DashboardState extends State<Dashboard> {
                           colorBlendMode: BlendMode.colorBurn,
                         ),
                         Container(
-                          height: (MediaQuery.of(context).size.height -
-                                  MediaQuery.of(context).padding.top) *
-                              0.25,
-                          width: MediaQuery.of(context).size.width * 0.7,
-                          //margin: EdgeInsets.only(top: 40, left: 40, right: 40),
+                          height:
+                              (medaiQ.size.height - medaiQ.padding.top) * 0.25,
+                          width: medaiQ.size.width * 0.7,
                           decoration: new BoxDecoration(
                             color: Colors.white30,
                             border: Border.all(color: Colors.black, width: 0.0),
@@ -130,7 +126,6 @@ class _DashboardState extends State<Dashboard> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      //'oo',
                                       '${upComingReminder.comingReminder().title} ',
                                       style: TextStyle(
                                           fontSize: 28,
@@ -152,7 +147,7 @@ class _DashboardState extends State<Dashboard> {
                                   ],
                                 ),
                               ),
-                              Text(
+                              const Text(
                                 'Upcoming Reminder',
                                 style: TextStyle(
                                     color: Colors.white,
@@ -168,9 +163,6 @@ class _DashboardState extends State<Dashboard> {
                 ),
                 Expanded(
                   child: Container(
-                    // height: (MediaQuery.of(context).size.height -
-                    //         MediaQuery.of(context).padding.top) *
-                    //     0.61,
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: Theme.of(context).canvasColor,
@@ -182,9 +174,8 @@ class _DashboardState extends State<Dashboard> {
                     child: Column(
                       children: [
                         SizedBox(
-                          height: (MediaQuery.of(context).size.height -
-                                  MediaQuery.of(context).padding.top) *
-                              0.015,
+                          height:
+                              (medaiQ.size.height - medaiQ.padding.top) * 0.015,
                         ),
                         Expanded(
                           child: Row(
@@ -210,6 +201,7 @@ class _DashboardState extends State<Dashboard> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               HomeContainer(
+                                onpress: () => pushDietPlan(context),
                                 title: 'Diet Plan',
                                 icnimgurl: 'images/icn2.png',
                                 imgurl: 'images/image3.png',
@@ -224,9 +216,8 @@ class _DashboardState extends State<Dashboard> {
                           ),
                         ),
                         SizedBox(
-                          height: (MediaQuery.of(context).size.height -
-                                  MediaQuery.of(context).padding.top) *
-                              0.015,
+                          height:
+                              (medaiQ.size.height - medaiQ.padding.top) * 0.015,
                         ),
                       ],
                     ),

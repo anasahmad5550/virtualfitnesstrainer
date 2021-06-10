@@ -3,10 +3,7 @@ import 'package:virtualfitnesstrainer/models/exercise.dart';
 import 'db_helper.dart';
 
 class Saveworkouts with ChangeNotifier {
-  List<String> _namesOfSaveWorkoutList = [
-    //'Chest',
-    // 'Back',
-  ];
+  List<String> _namesOfSaveWorkoutList = [];
 
   List<String> get saveWorkoutList {
     return [..._namesOfSaveWorkoutList];
@@ -27,7 +24,6 @@ class Saveworkouts with ChangeNotifier {
   }
 
   Future<void> addExerciseToList(String listname, Exercise exe) async {
-    //_namesOfSaveWorkoutList.add(wkout);
     //save into db
     await DBHelper.insertExercise('SaveExercises', {
       'title': exe.title,

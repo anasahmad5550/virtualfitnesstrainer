@@ -7,14 +7,6 @@ class DBHelper {
   static const save =
       'CREATE TABLE SaveExercises(title TEXT PRIMARY KEY, listTitle TEXT,imgurl TEXT, videoUrlID TEXT, description TEXT,isPresentInSaveWorkout TEXT,FOREIGN KEY(listTitle) REFERENCES EList(listTitle) ON DELETE CASCADE)';
 
-  // static Future<Database> databaseForSaveExerciseTable() async {
-  //   final dbPath = await sql.getDatabasesPath();
-  //   return sql.openDatabase(path.join(dbPath, 'SaveWorkouts5.db'),
-  //       onCreate: (db, version) async {
-  //     await db.execute(save);
-  //   }, version: 1);
-  // }
-
   static Future<Database> database() async {
     final dbPath = await sql.getDatabasesPath();
     return sql.openDatabase(path.join(dbPath, 'SaveWorkouts1.db'),

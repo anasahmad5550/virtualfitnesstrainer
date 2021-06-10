@@ -5,7 +5,7 @@ import 'package:virtualfitnesstrainer/constants.dart';
 import 'package:virtualfitnesstrainer/widgets/round_button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'bmiResultScreen.dart';
-import 'package:virtualfitnesstrainer/calculateBmi.dart';
+import 'package:virtualfitnesstrainer/helpers/calculateBmi.dart';
 
 class BmiCalculaorScreen extends StatefulWidget {
   static const String routeid = '/bmicalculatorscreen';
@@ -34,7 +34,7 @@ class _BmiCalculaorScreenState extends State<BmiCalculaorScreen> {
                     card: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
+                        const Text(
                           'WEIGHT',
                           style: ktstyle,
                         ),
@@ -81,7 +81,7 @@ class _BmiCalculaorScreenState extends State<BmiCalculaorScreen> {
                   card: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
+                      const Text(
                         'AGE',
                         style: ktstyle,
                       ),
@@ -130,7 +130,7 @@ class _BmiCalculaorScreenState extends State<BmiCalculaorScreen> {
               card: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     'HEIGHT',
                     style: ktstyle,
                   ),
@@ -148,7 +148,7 @@ class _BmiCalculaorScreenState extends State<BmiCalculaorScreen> {
                               0.06,
                         ),
                       ),
-                      Text('cm')
+                      const Text('cm')
                     ],
                   ),
                   Slider(
@@ -173,7 +173,7 @@ class _BmiCalculaorScreenState extends State<BmiCalculaorScreen> {
               card: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text(
+                  const Text(
                     'MALE',
                     style: ktstyle,
                   ),
@@ -187,7 +187,7 @@ class _BmiCalculaorScreenState extends State<BmiCalculaorScreen> {
                           gender = value;
                         });
                       }),
-                  Text(
+                  const Text(
                     'FEMALE',
                     style: ktstyle,
                   ),
@@ -210,7 +210,6 @@ class _BmiCalculaorScreenState extends State<BmiCalculaorScreen> {
                   },
                 ),
               );
-              //resultbmi(context)
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -224,7 +223,7 @@ class _BmiCalculaorScreenState extends State<BmiCalculaorScreen> {
                     color: Theme.of(context).accentColor,
                   ),
                   child: Center(
-                    child: Text(
+                    child: const Text(
                       'Calculate',
                       style: TextStyle(color: Colors.white),
                     ),

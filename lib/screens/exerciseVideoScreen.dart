@@ -94,14 +94,23 @@ class _ExerciseVideoScreenState extends State<ExerciseVideoScreen> {
   }
 
   void AddOrRemove() async {
+    _controller.pause();
     if (!checkpresentInSaveWorkout) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => SaveWorkoutsScreen(
-              exercise: AddedExercise(),
-            ),
-          ));
+      await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SaveWorkoutsScreen(
+            exercise: AddedExercise(),
+          ),
+        ),
+      );
+      // _scaffoldKey.currentState.showSnackBar(SnackBar(
+      //   content: Text('${AddedExercise().title} is Added'),
+      // ));
+
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      //   content: Text('${AddedExercise().title} is Added'),
+      // ));
     } else {
       await Provider.of<Saveworkouts>(context, listen: false)
           .RemoveExcerciseFromList(widget.exerciseName, widget.listName);
@@ -114,125 +123,127 @@ class _ExerciseVideoScreenState extends State<ExerciseVideoScreen> {
   @override
   Widget build(BuildContext context) {
     descriptionEx = selectDescriptionAndVideoUrl().description;
-    return YoutubePlayerBuilder(
-      onExitFullScreen: () {
-        // The player forces portraitUp after exiting fullscreen. This overrides the behaviour.
+    return Scaffold(
+      body: YoutubePlayerBuilder(
+        onExitFullScreen: () {
+          // The player forces portraitUp after exiting fullscreen. This overrides the behaviour.
 
-        SystemChrome.setPreferredOrientations(DeviceOrientation.values);
-      },
-      player: YoutubePlayer(
-        controller: _controller,
-        showVideoProgressIndicator: true,
-        progressIndicatorColor: Colors.blueAccent,
-        topActions: <Widget>[
-          const SizedBox(width: 8.0),
-          Expanded(
-            child: Text(
-              _controller.metadata.title,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 18.0,
-              ),
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
-            ),
-          ),
-        ],
-        onReady: () {
-          _isPlayerReady = true;
+          SystemChrome.setPreferredOrientations(DeviceOrientation.values);
         },
-        // onEnded: (data) {
-        //   _controller
-        //       .load(_ids[(_ids.indexOf(data.videoId) + 1) % _ids.length]);
-        //   _showSnackBar('Next Video Started!');
-        // },
-      ),
-      builder: (context, player) => Scaffold(
-        key: _scaffoldKey,
-        appBar: CupertinoNavigationBar(
-          backgroundColor: Theme.of(context).canvasColor,
-          trailing: Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-            child: RaisedButton(
-              child: Text(checkpresentInSaveWorkout ? 'Remove' : 'Add'),
-              onPressed: AddOrRemove,
-              textColor: Colors.white,
-              color: Color(0xffFB376C),
-            ),
-          ),
-          middle: FittedBox(
-            child: Text(
-              widget.exerciseName,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
-            ),
-          ),
-          leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back_ios,
-              size: 20,
-            ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ListView(
-            children: [
-              player,
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      'How to do...',
-                      style:
-                          TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      descriptionEx,
-                      style: TextStyle(
-                        fontSize: 18,
-                      ),
-                    ),
-                  ],
+        player: YoutubePlayer(
+          controller: _controller,
+          showVideoProgressIndicator: true,
+          progressIndicatorColor: Colors.blueAccent,
+          topActions: <Widget>[
+            const SizedBox(width: 8.0),
+            Expanded(
+              child: Text(
+                _controller.metadata.title,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 18.0,
                 ),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
               ),
-            ],
-          ),
+            ),
+          ],
+          onReady: () {
+            _isPlayerReady = true;
+          },
+          // onEnded: (data) {
+          //   _controller
+          //       .load(_ids[(_ids.indexOf(data.videoId) + 1) % _ids.length]);
+          //   _showSnackBar('Next Video Started!');
+          // },
         ),
-      ),
-    );
-  }
-
-  Widget _text(String title, String value) {
-    return RichText(
-      text: TextSpan(
-        text: '$title : ',
-        style: const TextStyle(
-          color: Colors.blueAccent,
-          fontWeight: FontWeight.bold,
-        ),
-        children: [
-          TextSpan(
-            text: value ?? '',
-            style: const TextStyle(
-              color: Colors.blueAccent,
-              fontWeight: FontWeight.w300,
+        builder: (context, player) => Scaffold(
+          key: _scaffoldKey,
+          appBar: CupertinoNavigationBar(
+            backgroundColor: Theme.of(context).canvasColor,
+            trailing: Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: RaisedButton(
+                child: Text(checkpresentInSaveWorkout ? 'Remove' : 'Add'),
+                onPressed: AddOrRemove,
+                textColor: Colors.white,
+                color: Color(0xffFB376C),
+              ),
+            ),
+            middle: FittedBox(
+              child: Text(
+                widget.exerciseName,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
+              ),
+            ),
+            leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back_ios,
+                size: 20,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
             ),
           ),
-        ],
+          body: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ListView(
+              children: [
+                player,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        'How to do...',
+                        style: TextStyle(
+                            fontSize: 22, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        descriptionEx,
+                        style: TextStyle(
+                          fontSize: 18,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
 
-  Widget get _space => const SizedBox(height: 10);
+  // Widget _text(String title, String value) {
+  //   return RichText(
+  //     text: TextSpan(
+  //       text: '$title : ',
+  //       style: const TextStyle(
+  //         color: Colors.blueAccent,
+  //         fontWeight: FontWeight.bold,
+  //       ),
+  //       children: [
+  //         TextSpan(
+  //           text: value ?? '',
+  //           style: const TextStyle(
+  //             color: Colors.blueAccent,
+  //             fontWeight: FontWeight.w300,
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
+
+  // Widget get _space => const SizedBox(height: 10);
 }

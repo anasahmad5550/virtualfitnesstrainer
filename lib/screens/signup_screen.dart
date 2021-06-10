@@ -6,7 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'homeScreen.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-//import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+
 import 'package:virtualfitnesstrainer/models/helperFunctions.dart';
 
 class MyApp extends StatelessWidget {
@@ -17,7 +17,6 @@ class MyApp extends StatelessWidget {
       return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'FYP Signup Page',
-        theme: ThemeData.light(),
         home: SignUpPage(),
       );
     });
@@ -65,18 +64,18 @@ class _SignUpPageState extends State<SignUpPage> {
 
           _AddExtraData();
           RouteToHomeScreen();
-          print('${_user.user.displayName} is now logged in');
+
           //print(_result1.user.photoURL);
 
-          print('''
-         Logged in!
-         
-         Token: ${accessToken.token}
-         User id: ${accessToken.userId}
-         Expires: ${accessToken.expires}
-         Permissions: ${accessToken.permissions}
-         Declined permissions: ${accessToken.declinedPermissions}
-         ''');
+          //  print('''
+          // Logged in!
+          //
+          // Token: ${accessToken.token}
+          // User id: ${accessToken.userId}
+          // Expires: ${accessToken.expires}
+          // Permissions: ${accessToken.permissions}
+          // Declined permissions: ${accessToken.declinedPermissions}
+          // ''');
           break;
         case FacebookLoginStatus.cancelledByUser:
           print('Login cancelled by the user.');
@@ -180,7 +179,7 @@ class _SignUpPageState extends State<SignUpPage> {
     final a = await FirebaseFirestore.instance
         .collection("users")
         .doc(_user.user.uid)
-        .set({"name": nameN});
+        .set({"name": nameN, "image_url": null});
     return a;
   }
 
@@ -250,7 +249,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                   FontWeight.w700,
                                   Colors.black,
                                   null),
-                              Helper().textField("Enter Name", false,
+                              Helper().textField("John", false,
                                   (String fnameText) {
                                 _name = fnameText;
                               }),
@@ -261,7 +260,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                   FontWeight.w700,
                                   Colors.black,
                                   null),
-                              Helper().textField("Enter E-mail", false,
+                              Helper().textField("xyz@xyz.com", false,
                                   (String email) {
                                 _email = email;
                               }),
@@ -272,7 +271,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                   FontWeight.w700,
                                   Colors.black,
                                   null),
-                              Helper().textField("Enter Password", true,
+                              Helper().textField("********", true,
                                   (String passText) {
                                 _password = passText;
                               }),
@@ -286,25 +285,17 @@ class _SignUpPageState extends State<SignUpPage> {
                                   minWidth:
                                       44.444 * SizeConfig.imageSizeMultiplier,
                                   height: 7.2 * SizeConfig.heightMultiplier,
-                                  child: ElevatedButton(
-                                    style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all<Color>(
-                                                Theme.of(context).accentColor),
-                                        shape: MaterialStateProperty.all<
-                                            RoundedRectangleBorder>(
-                                          RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                                2.2 *
-                                                    SizeConfig
-                                                        .heightMultiplier),
-                                          ),
-                                        )),
+                                  child: FlatButton(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          2.2 * SizeConfig.heightMultiplier),
+                                    ),
+                                    color: Color(0xffFB376C),
 
                                     onPressed:
                                         _loginWithEmailAndPassword, //code here
 
-                                    child: Text(
+                                    child: const Text(
                                       "Signup",
                                       style: TextStyle(
                                         fontSize: 20.0,

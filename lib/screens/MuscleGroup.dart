@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:virtualfitnesstrainer/models/exercise.dart';
 import 'exerciseScreen.dart';
-import 'package:virtualfitnesstrainer/exerciseList.dart';
+import 'package:virtualfitnesstrainer/helpers/exerciseList.dart';
 
 class ExerciseMuscleGroupScreen extends StatefulWidget {
   @override
@@ -51,17 +52,14 @@ class _ExerciseMuscleGroupScreenState extends State<ExerciseMuscleGroupScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 35.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                    child: Text(
-                      '$name',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 25.0,
-                      ),
+                  Text(
+                    '$name',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25.0,
                     ),
                   ),
                   Divider(
@@ -81,21 +79,24 @@ class _ExerciseMuscleGroupScreenState extends State<ExerciseMuscleGroupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xff1D0E36),
+      appBar: AppBar(
+        title: Text('Muscle Group'),
+      ),
+      //backgroundColor: Color(0xff1D0E36),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Expanded(
-              flex: 0,
-              child: Text('Muscle Group',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 23.0,
-                    fontWeight: FontWeight.w900,
-                  )),
-            ),
+            // Expanded(
+            //   flex: 0,
+            //   child: Text('Muscle Group',
+            //       textAlign: TextAlign.center,
+            //       style: TextStyle(
+            //         color: Colors.white,
+            //         fontSize: 23.0,
+            //         fontWeight: FontWeight.w900,
+            //       )),
+            // ),
             Expanded(
               flex: 1,
               child: Container(

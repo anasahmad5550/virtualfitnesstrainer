@@ -20,7 +20,7 @@ int age = 20;
 bool gender = false;
 double bmr;
 String dropdownValue = 'little or no exercise';
-List<String> list = [
+const List<String> list = const [
   'little or no exercise',
   'light exercise/sports 1-3 days/week',
   'moderate exercise/sports 3-5 days/week',
@@ -51,7 +51,8 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
+    final size = MediaQuery.of(context).size;
+    final paddingTop = MediaQuery.of(context).padding.top;
     return Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
       body: Column(
@@ -66,7 +67,7 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
                     card: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
+                        const Text(
                           'WEIGHT',
                           style: ktstyle,
                         ),
@@ -74,9 +75,7 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
                           weight.toString(),
                           style: TextStyle(
                             fontWeight: FontWeight.w900,
-                            fontSize: (MediaQuery.of(context).size.height -
-                                    MediaQuery.of(context).padding.top) *
-                                0.06,
+                            fontSize: (size.height - paddingTop) * 0.06,
                           ),
                         ),
                         Row(
@@ -113,7 +112,7 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
                   card: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
+                      const Text(
                         'AGE',
                         style: ktstyle,
                       ),
@@ -121,9 +120,7 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
                         age.toString(),
                         style: TextStyle(
                           fontWeight: FontWeight.w900,
-                          fontSize: (MediaQuery.of(context).size.height -
-                                  MediaQuery.of(context).padding.top) *
-                              0.06,
+                          fontSize: (size.height - paddingTop) * 0.06,
                         ),
                       ),
                       Row(
@@ -163,7 +160,7 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
               card: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     'HEIGHT',
                     style: ktstyle,
                   ),
@@ -176,9 +173,7 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
                         height.toString(),
                         style: TextStyle(
                           fontWeight: FontWeight.w900,
-                          fontSize: (MediaQuery.of(context).size.height -
-                                  MediaQuery.of(context).padding.top) *
-                              0.06,
+                          fontSize: (size.height - paddingTop) * 0.06,
                         ),
                       ),
                       Text('cm')
@@ -210,7 +205,7 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
                   Text(
                     'Activity : ',
                     style: TextStyle(
-                      fontSize: width * 0.05,
+                      fontSize: size.width * 0.05,
                       color: Color(0xff8d8e98),
                     ),
                   ),
@@ -248,7 +243,7 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
               card: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text(
+                  const Text(
                     'MALE',
                     style: ktstyle,
                   ),
@@ -263,7 +258,7 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
                           gender = value;
                         });
                       }),
-                  Text(
+                  const Text(
                     'FEMALE',
                     style: ktstyle,
                   ),
@@ -286,7 +281,6 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
                   },
                 ),
               );
-              //resultbmi(context)
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -300,7 +294,7 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
                     color: Theme.of(context).accentColor,
                   ),
                   child: Center(
-                    child: Text(
+                    child: const Text(
                       'Calculate',
                       style: TextStyle(color: Colors.white),
                     ),

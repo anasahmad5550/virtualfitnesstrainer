@@ -26,13 +26,6 @@ class _NewReminderState extends State<NewReminder> {
         final now = new DateTime.now();
         val = DateTime(now.year, now.month, now.day, value.hour, value.minute);
       }
-      //   showDatePicker(
-      //               context: context,
-      //               initialDate: DateTime.now(),
-      //               firstDate: DateTime(2019),
-      //               lastDate: DateTime.now())
-      //           .then((value) {
-      //         if (value == null) return;
 
       setState(() {
         _selecteddate = val;
@@ -55,6 +48,7 @@ class _NewReminderState extends State<NewReminder> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Card(
+        color: Theme.of(context).canvasColor,
         elevation: 5,
         child: Container(
           padding: EdgeInsets.only(
@@ -92,7 +86,7 @@ class _NewReminderState extends State<NewReminder> {
                   textColor: Colors.white,
                   color: Theme.of(context).accentColor,
                   onPressed: submitData,
-                  child: Text(
+                  child: const Text(
                     'Add Reminder',
                   ))
             ],
